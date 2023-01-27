@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>COVID Patients Management System</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+	<!-- Brand -->
+	<a class="navbar-brand" href="#">Local COVID Cases</a>
+
+	<!-- Toggler/collapsibe Button -->
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<!-- Navbar links -->
+	<div class="collapse navbar-collapse" id="collapsibleNavbar">
+		<ul class="navbar-nav">
+			<li class="nav-item">
+				<a class="nav-link" th:href="@{/}">Total COVID Cases</a>
+			</li>
+		</ul>
+	</div>
+</nav>
+
+	<div class ="container">
+		<div class = "row">
+			<h1> List of patients &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspTotal patients: <tr th:text="${patients.size()}==1 ? '-' : ${patients.size()}"></tr></h1>
+		</div>
+
+
+		<div class = "row">
+			<div class = "col-lg-3">
+				<a th:href = "@{/patients/new}" class = "btn btn-primary btn-sm mb-3"> Add patient</a>
+			</div>
+		</div>
+
+			<form th:action="@{/patients}" method="get">
+				<input type="text" name="keyword" placeholder="Search..." class="search-input">
+				<button type="submit">Search</button>
+			</form>
+		<table class = "table table-striped table-bordered">
+			<thead class = "table-dark">
+				<tr>
+					<th> Patient Name</th>
+					<th> Patient Phone Number</th>
+					<th> Patient Details </th>
+					<th> Actions </th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr th:each = "patient: ${patients}">
+					<td th:text = "${patient.name}"></td>
+					<td th:text = "${patient.pnumber}"></td>
+					<td th:text = "${patient.details}"></td>
+					<td>
+						<a th:href = "@{/patients/edit/{id}(id=${patient.id})}"
+						 class = "btn btn-outline-success">Update</a>
+						
+						<a th:href = "@{/patients/{id}(id=${patient.id})}"
+						 class = "btn btn-outline-danger">Delete</a>
+						 
+					</td>
+				</tr>
+			</tbody>
+		
+		</table>
+		
+	</div>
+</body>
+</html>
